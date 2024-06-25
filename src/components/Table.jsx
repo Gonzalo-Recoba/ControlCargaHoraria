@@ -107,9 +107,6 @@ const Table = () => {
     }
     const [horas, setHoras] = useState(valoresIniciales)
     const [escalafon, setEscalafon] = useState(0)
-    const clearAll = (e) => {
-       setHoras(valoresIniciales)
-    }
 
     const handleInput = (e) => {
         const { name, value } = e.target;
@@ -323,7 +320,8 @@ const Table = () => {
   return (
     <div className=''>
         <h2>HORAS ASIGNADAS AL {dia + "/" + mes + "/" + anio} </h2>
-        <p>Version: 2.0 - 24/06/24</p>
+        <p>Version: 1.03 - 24/06/24</p>
+        <form id='formulario'>
             <table className="table col-7 py-2">
                 <thead>
                 <tr className="bg-blue-100">
@@ -443,6 +441,8 @@ const Table = () => {
                 </tr>
                 </tbody>
             </table>
+        </form>
+
             {show ? 
             <>
                 {/* <p className='alerta'>{txtRonda}, puede elegir {puedeElegir}/{puedeElegirInd} horas {coord ? "coordinación incluída" : "más coordinación"}.</p> */}
@@ -472,7 +472,7 @@ const Table = () => {
                     <div className='buttons col-5'>
                         {/* <button className='buttonCalc button' onClick={calcularRonda}>Calcular ronda</button> */}
                         <button className='buttonCalc button' onClick={info}>Calcular ronda</button>
-                        <button className='buttonClear button' onClick={clearAll}>Limpiar</button>
+                        <button className='buttonClear button' form='formulario' type='submit'>Limpiar</button>
                     </div>
                 </div>
             }
