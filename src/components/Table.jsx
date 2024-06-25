@@ -6,12 +6,12 @@ const Table = () => {
     let topeRonda;
     // let ronda;
     let topeMax;
-    const [ronda, setRonda] = useState(null)
+    const [ronda, setRonda] = useState(1)
     const [txtRonda, setTxtRonda] = useState('')
     const [show, setShow] = useState(false)
     const [puedeElegir, setPuedeElegir] = useState(0)
     const [puedeElegirInd, setPuedeElegirInd] = useState(0)
-    const [coord, setCoord] = useState(false)
+    const [coord, setCoord] = useState(undefined)
     
     const hsAElegir = (a) => {
         let b = 60 - horas.total_AdmPublica;
@@ -30,17 +30,31 @@ const Table = () => {
         return a;
      }
     
-     const coordInc = (pei) => { // 22
-        // true ? "coordinación incluída" : "más coordinación"
-        if(pei  <= (50 - horas.totalAnep)) { // 22 < 26 T
-            if(pei <= (60 - horas.total_AdmPublica)) { // 22 < 36 T
-                if (horas.noDoc + horas.otrosAnep_noDoc != 0) {
-                    return false
-                }
-            }
-        }
-        return true
-     }
+    //  const coordInc = (pei) => { // 22
+    //     //pei: horas que puede elegir por indivisibilidad (hs max)
+    //     // true ? "coordinación incluída" : "más coordinación"
+    //     console.log(pei)
+    //         if(pei <= (60 - horas.total_AdmPublica)) {
+    //             console.log('1')
+    //             if(pei  <= (50 - horas.totalAnep)) {
+    //                 console.log('2')
+    //                 if (horas.noDoc + horas.otrosAnep_noDoc != 0) {
+    //                     console.log('3')
+    //                     return true
+    //                 } else{
+    //                     console.log('4')
+    //                     return false
+    //                 }
+    //             } else {
+    //                 console.log('5')
+    //                 return true
+    //             }
+    //         } else {
+    //             console.log('6')
+    //             return true
+    //         }
+    // }
+
 
     const valoresIniciales = {
         //DGETP
@@ -121,7 +135,7 @@ const Table = () => {
     setHoras({...horas, 
         noAnep_total:  horas.noAnep_docDirEscalaf + horas.noAnep_docDirOtros + horas.noAnep_coordCentro + horas.noAnep_coordPlan + horas.noAnep_docIndBasicos + horas.noAnep_docIndEscalaf + horas.noAnep_docIndOtros + horas.noAnep_noDoc,
     })
-}, [horas.noAnep_docDirEscalaf, horas.noAnep_docDirOtros, horas.noAnep_coordCentro, horas.noAnep_coordPlan, horas.noAnep_docIndBasicos, horas.noAnep_docIndEscalaf, horas.noAnep_docIndOtros, horas.noAnep_noDoc,])
+    }, [horas.noAnep_docDirEscalaf, horas.noAnep_docDirOtros, horas.noAnep_coordCentro, horas.noAnep_coordPlan, horas.noAnep_docIndBasicos, horas.noAnep_docIndEscalaf, horas.noAnep_docIndOtros, horas.noAnep_noDoc,])
      useEffect(()=>{
         setHoras({...horas, 
             total_AdmPublica: horas.totalDgetp + horas.otrosAnep_total + horas.noAnep_total,
@@ -184,8 +198,7 @@ const Table = () => {
                     topeMax = 22;
                     setPuedeElegir(hsAElegir(topeRonda - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
                     setPuedeElegirInd(hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
-                    setCoord(coordInc(puedeElegirInd))
-
+                    //CASO 1
 
 
                 //Doc. Dir. menor a 30
@@ -220,8 +233,7 @@ const Table = () => {
                         topeMax = 22;
                         setPuedeElegir(hsAElegir(topeRonda - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
                         setPuedeElegirInd(hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
-                        // setCoord(false)
-                        setCoord(coordInc(puedeElegirInd))
+                        //CASO 2
                     }
                     
                     //Doc. Dir. mayor a 30
@@ -250,9 +262,8 @@ const Table = () => {
                             hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)) : 
                             hsAElegirInd(topeMax - horas.basicosAnep - horas.otrosCargosAnep - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)); 
                             setPuedeElegirInd(puedeElegiry)
-                            // setCoord(false)
-                            setCoord(coordInc(puedeElegirInd))
-                        // horas.noDoc + horas.otrosAnep_noDoc > 0 ? setCoord(true) : setCoord(false)
+
+                        //CASO 3
                     }
                     
                     // Doc. Dir. mayor a 12
@@ -266,7 +277,7 @@ const Table = () => {
                     }
                 }
             } 
-            
+
             // Con cargos de Direccion, Subdireccion, coordinacion y Basicos Agrarios
             else if(horas.basicosAnep == 40){
                 setRonda(1)
@@ -277,8 +288,10 @@ const Table = () => {
                 setCoord(true)
             }
         }
+    }
 
-
+    const info = () => {
+        calcularRonda()
         switch(ronda){
             case 0 :
                 setTxtRonda('***No puede elegir***')
@@ -431,7 +444,8 @@ const Table = () => {
             </table>
             {show ? 
             <>
-                <p className='alerta'>{txtRonda}, puede elegir {puedeElegir}/{puedeElegirInd} horas {coord ? "coordinación incluída" : "más coordinación"}.</p>
+                {/* <p className='alerta'>{txtRonda}, puede elegir {puedeElegir}/{puedeElegirInd} horas {coord ? "coordinación incluída" : "más coordinación"}.</p> */}
+                <p className='alerta'>{txtRonda}. Puede elegir {puedeElegir === puedeElegirInd ? puedeElegir : puedeElegir+" o "+puedeElegirInd} horas{coord == undefined ? "" : (coord ? " coordinación incluída" : " más coordinación")}.</p>
                 <button className='buttonCalc button' onClick={() =>{setShow(false)}}>OK</button>
             </>
                 :
@@ -455,7 +469,8 @@ const Table = () => {
                         </div>} */}
                     </div>
                     <div className='buttons col-5'>
-                        <button className='buttonCalc button' onClick={calcularRonda}>Calcular ronda</button>
+                        {/* <button className='buttonCalc button' onClick={calcularRonda}>Calcular ronda</button> */}
+                        <button className='buttonCalc button' onClick={info}>Calcular ronda</button>
                         <button className='buttonClear button' onClick={clearAll}>Limpiar</button>
                     </div>
                 </div>
