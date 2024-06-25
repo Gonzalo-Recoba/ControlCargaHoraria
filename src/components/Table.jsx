@@ -323,6 +323,7 @@ const Table = () => {
   return (
     <div className=''>
         <h2>HORAS ASIGNADAS AL {dia + "/" + mes + "/" + anio} </h2>
+        <p>Version: 2.0 - 24/06/24</p>
             <table className="table col-7 py-2">
                 <thead>
                 <tr className="bg-blue-100">
