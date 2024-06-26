@@ -151,7 +151,8 @@ const Table = () => {
      }, [horas.totalDgetp, horas.otrosAnep_total, horas.noAnep_total])
 
     const calcularRonda = () =>{
-    //Con 60 hs en Adm. Publica
+    
+        //Con 60 hs en Adm. Publica
         if(horas.total_AdmPublica >=60){
             setRonda(0)
             topeRonda = 60;
@@ -276,7 +277,7 @@ const Table = () => {
             } 
 
             // Con cargos de Direccion, Subdireccion, coordinacion y Basicos Agrarios
-            else if(horas.basicosAnep == 40){
+            else if(horas.basicosAnep === 40){
                 setRonda(1)
                 topeRonda = 48;
                 topeMax = 50;
@@ -285,28 +286,29 @@ const Table = () => {
                 setCoord(true)
             }
         }
+        // return ronda
     }
 
     const info = () => {
-        calcularRonda()
-        switch(ronda){
-            case 0 :
-                setTxtRonda('***No puede elegir***')
-                break;
-            case 1 :
-                setTxtRonda('Elige en primera ronda')
-                break;
-            case 2 :
-                setTxtRonda('Elige en segunda ronda')
-                break;
-            case 3 :
-                setTxtRonda('Elige en tercera ronda')
-                break;
-            case 4 :
-                setTxtRonda('Elige en cuarta ronda')
-                break;
-            default: setTxtRonda('Ver casos excepcionales')
-        }
+        calcularRonda();
+        // switch(ronda){
+        //     case 0 :
+        //         setTxtRonda('***No puede elegir***')
+        //         break;
+        //     case 1 :
+        //         setTxtRonda('Elige en primera ronda')
+        //         break;
+        //     case 2 :
+        //         setTxtRonda('Elige en segunda ronda')
+        //         break;
+        //     case 3 :
+        //         setTxtRonda('Elige en tercera ronda')
+        //         break;
+        //     case 4 :
+        //         setTxtRonda('Elige en cuarta ronda')
+        //         break;
+        //     default: setTxtRonda('Ver casos excepcionales')
+        // }
         setShow(true)
         // setTimeout(()=>{setShow(false)}, 5000)
     }
@@ -320,115 +322,115 @@ const Table = () => {
   return (
     <div className=''>
         <h2>HORAS ASIGNADAS AL {dia + "/" + mes + "/" + anio} </h2>
-        <p>Version: 1.03 - 24/06/24</p>
+        <p>Version: 1.04 - 25/06/24</p>
         <form id='formulario'>
             <table className="table col-7 py-2">
                 <thead>
                 <tr className="bg-blue-100">
-                    <th className="" rowSpan="2">ORGANISMO</th>
-                    <th className="" colSpan="2">DOCENCIA DIRECTA</th>
-                    <th className="" colSpan="2">COORDINACIÓN</th>
-                    <th className="" colSpan="3">DOCENCIA INDIRECTA</th>
-                    <th className="" rowSpan="2">NO DOCENTE</th>
-                    <th className="" rowSpan="2">TOTALES</th>
+                    <th rowSpan="2">ORGANISMO</th>
+                    <th colSpan="2">DOCENCIA DIRECTA</th>
+                    <th colSpan="2">COORDINACIÓN</th>
+                    <th colSpan="3">DOCENCIA INDIRECTA</th>
+                    <th rowSpan="2">NO DOCENTE</th>
+                    <th rowSpan="2">TOTALES</th>
                 </tr>
-                <tr className="">
-                    <th className="">ESCALAF.</th>
-                    <th className="">OTROS*</th>
-                    <th className="">CENTRO</th>
-                    <th className="">PLAN <br /><span className='span'>(EPI, EGI, EDI, EDT)</span></th>
-                    <th className="">BÁSICOS</th>
-                    <th className="">ESCALAF.</th>
-                    <th className="">OTROS</th>
+                <tr>
+                    <th>ESCALAF.</th>
+                    <th>OTROS*</th>
+                    <th>CENTRO</th>
+                    <th>PLAN <br /><span className='span'>(EPI, EGI, EDI, EDT)</span></th>
+                    <th>BÁSICOS</th>
+                    <th>ESCALAF.</th>
+                    <th>OTROS</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr className="dgetp">
-                    <td className="">DGETP</td>
-                    <td className="">
-                        <input type="number" name='docDirEscalaf'  className="text-center"  defaultValue={horas.docDirEscalaf} onBlur={handleInput}></input>
+                    <td>DGETP</td>
+                    <td>
+                        <input type="number" name='docDirEscalaf'  className="text-center"  defaultValue={horas.docDirEscalaf} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='docDirOtros'  className="text-center" defaultValue={horas.docDirOtros} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='docDirOtros'  className="text-center" defaultValue={horas.docDirOtros} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='coordCentro'  className="text-center" defaultValue={horas.coordCentro} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='coordCentro'  className="text-center" defaultValue={horas.coordCentro} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='coordPlan'  className="text-center" defaultValue={horas.coordPlan} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='coordPlan'  className="text-center" defaultValue={horas.coordPlan} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='docIndBasicos'  className="text-center" defaultValue={horas.docIndBasicos} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='docIndBasicos'  className="text-center" defaultValue={horas.docIndBasicos} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='docIndEscalaf'  className="text-center" defaultValue={horas.docIndEscalaf} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='docIndEscalaf'  className="text-center" defaultValue={horas.docIndEscalaf} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='docIndOtros'  className="text-center" defaultValue={horas.docIndOtros} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='docIndOtros'  className="text-center" defaultValue={horas.docIndOtros} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noDoc'  className="text-center" defaultValue={horas.noDoc} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noDoc'  className="text-center" defaultValue={horas.noDoc} onBlur={handleInput} min={0} max={60}/>
                     </td>
                     <td className="text">{horas.totalDgetp}</td>
                 </tr>
                 <tr>
-                    <td className="">OTROS ANEP</td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_docDirEscalaf'  className="text-center" defaultValue={horas.otrosAnep_docDirEscalaf} onBlur={handleInput}></input>
+                    <td>OTROS ANEP</td>
+                    <td>
+                        <input type="number" name='otrosAnep_docDirEscalaf'  className="text-center" defaultValue={horas.otrosAnep_docDirEscalaf} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_docDirOtros'  className="text-center" defaultValue={horas.otrosAnep_docDirOtros} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_docDirOtros'  className="text-center" defaultValue={horas.otrosAnep_docDirOtros} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_coordCentro'  className="text-center" defaultValue={horas.otrosAnep_coordCentro} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_coordCentro'  className="text-center" defaultValue={horas.otrosAnep_coordCentro} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_coordPlan'  className="text-center" defaultValue={horas.otrosAnep_coordPlan} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_coordPlan'  className="text-center" defaultValue={horas.otrosAnep_coordPlan} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_docIndBasicos'  className="text-center" defaultValue={horas.otrosAnep_docIndBasicos} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_docIndBasicos'  className="text-center" defaultValue={horas.otrosAnep_docIndBasicos} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_docIndEscalaf'  className="text-center" defaultValue={horas.otrosAnep_docIndEscalaf} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_docIndEscalaf'  className="text-center" defaultValue={horas.otrosAnep_docIndEscalaf} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_docIndOtros'  className="text-center" defaultValue={horas.otrosAnep_docIndOtros} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_docIndOtros'  className="text-center" defaultValue={horas.otrosAnep_docIndOtros} onBlur={handleInput}  min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='otrosAnep_noDoc'  className="text-center" defaultValue={horas.otrosAnep_noDoc} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='otrosAnep_noDoc'  className="text-center" defaultValue={horas.otrosAnep_noDoc} onBlur={handleInput}  min={0} max={60}/>
                     </td>
                     <td className="text">{horas.otrosAnep_total}</td>
                 </tr>
                 <tr>
-                    <td className="">OTROS ORGANISMOS</td>
-                    <td className="">
-                        <input type="number" name='noAnep_docDirEscalaf'  className="text-center" defaultValue={horas.noAnep_docDirEscalaf} onBlur={handleInput}></input>
+                    <td>OTROS ORGANISMOS</td>
+                    <td>
+                        <input type="number" name='noAnep_docDirEscalaf'  className="text-center" defaultValue={horas.noAnep_docDirEscalaf} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_docDirOtros'  className="text-center" defaultValue={horas.noAnep_docDirOtros} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_docDirOtros'  className="text-center" defaultValue={horas.noAnep_docDirOtros} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_coordCentro'  className="text-center" defaultValue={horas.noAnep_coordCentro} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_coordCentro'  className="text-center" defaultValue={horas.noAnep_coordCentro} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_coordPlan'  className="text-center" defaultValue={horas.noAnep_coordPlan} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_coordPlan'  className="text-center" defaultValue={horas.noAnep_coordPlan} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_docIndBasicos'  className="text-center" defaultValue={horas.noAnep_docIndBasicos} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_docIndBasicos'  className="text-center" defaultValue={horas.noAnep_docIndBasicos} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_docIndEscalaf'  className="text-center" defaultValue={horas.noAnep_docIndEscalaf} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_docIndEscalaf'  className="text-center" defaultValue={horas.noAnep_docIndEscalaf} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_docIndOtros'  className="text-center" defaultValue={horas.noAnep_docIndOtros} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_docIndOtros'  className="text-center" defaultValue={horas.noAnep_docIndOtros} onBlur={handleInput} min={0} max={60}/>
                     </td>
-                    <td className="">
-                        <input type="number" name='noAnep_noDoc'  className="text-center" defaultValue={horas.noAnep_noDoc} onBlur={handleInput}></input>
+                    <td>
+                        <input type="number" name='noAnep_noDoc'  className="text-center" defaultValue={horas.noAnep_noDoc} onBlur={handleInput} min={0} max={60}/>
                     </td>
                     <td className="text">{horas.noAnep_total}</td>
                 </tr>
                 <tr>
-                    <td className="">TOTAL ADM. PÚBLICA</td>
+                    <td>TOTAL ADM. PÚBLICA</td>
                     <td className="text">{horas.total_docDirEscalaf}</td>
                     <td className="text">{horas.total_docDirOtros}</td>
                     <td className="text">{horas.total_coordCentro}</td>
@@ -446,13 +448,13 @@ const Table = () => {
             {show ? 
             <>
                 {/* <p className='alerta'>{txtRonda}, puede elegir {puedeElegir}/{puedeElegirInd} horas {coord ? "coordinación incluída" : "más coordinación"}.</p> */}
-                <p className='alerta'>{txtRonda}. Puede elegir {puedeElegir === puedeElegirInd ? puedeElegir : puedeElegir+" o "+puedeElegirInd} horas{coord == undefined ? "" : (coord ? " coordinación incluída" : " más coordinación")}.</p>
+                <p className='alerta'>Elige en {ronda}ª ronda. Puede elegir {puedeElegir === puedeElegirInd ? puedeElegir : puedeElegir+" o "+puedeElegirInd} horas{coord == undefined ? "" : (coord ? " coordinación incluída" : " más coordinación")}.</p>
                 <button className='buttonCalc button' onClick={() =>{setShow(false)}}>OK</button>
             </>
                 :
                 <div className='other row'>
                     <div className='defArea col-7'>
-                        <label>En esta area soy: </label>
+                        <label>En esta área soy: </label>
                         <select name="escalafon" id="ecalafon" className='select' onChange={handleEscalafon}>
                             <option value="0" className='option'>Interino, Suplente o Aspirante</option>
                             <option value="1" className='option'>Efectivo o con Derechos Emergentes</option>
