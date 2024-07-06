@@ -4,10 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 const Table = () => {
     let topeRonda;
-    // let ronda;
     let topeMax;
     const [ronda, setRonda] = useState(1)
-    const [txtRonda, setTxtRonda] = useState('')
     const [show, setShow] = useState(false)
     const [puedeElegir, setPuedeElegir] = useState(0)
     const [puedeElegirInd, setPuedeElegirInd] = useState(0)
@@ -30,30 +28,15 @@ const Table = () => {
         return a;
      }
     
-    //  const coordInc = (pei) => { // 22
-    //     //pei: horas que puede elegir por indivisibilidad (hs max)
-    //     // true ? "coordinación incluída" : "más coordinación"
-    //     console.log(pei)
-    //         if(pei <= (60 - horas.total_AdmPublica)) {
-    //             console.log('1')
-    //             if(pei  <= (50 - horas.totalAnep)) {
-    //                 console.log('2')
-    //                 if (horas.noDoc + horas.otrosAnep_noDoc != 0) {
-    //                     console.log('3')
-    //                     return true
-    //                 } else{
-    //                     console.log('4')
-    //                     return false
-    //                 }
-    //             } else {
-    //                 console.log('5')
-    //                 return true
-    //             }
-    //         } else {
-    //             console.log('6')
-    //             return true
-    //         }
-    // }
+     const coordInc = (pei) => { // 10
+ 
+
+           if((pei == (50 - horas.totalAnep)) || (pei == (60 - horas.total_AdmPublica))){
+            return true
+           } else{
+            return false
+           }
+    }
 
 
     const valoresIniciales = {
@@ -196,8 +179,10 @@ const Table = () => {
                     topeMax = 22;
                     setPuedeElegir(hsAElegir(topeRonda - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
                     setPuedeElegirInd(hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
+                    
                     //CASO 1
-
+                    setCoord(coordInc(hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf))))
+                
 
                 //Doc. Dir. menor a 30
                 } else if((horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.coordCentro + horas.docIndEscalaf) < 30){
@@ -232,6 +217,7 @@ const Table = () => {
                         setPuedeElegir(hsAElegir(topeRonda - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
                         setPuedeElegirInd(hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf)))
                         //CASO 2
+                        setCoord(coordInc(hsAElegirInd(topeMax - (horas.docDirEscalaf + horas.docDirOtros + horas.coordPlan + horas.docIndEscalaf))))
                     }
                     
                     //Doc. Dir. mayor a 30
@@ -262,6 +248,7 @@ const Table = () => {
                             setPuedeElegirInd(puedeElegiry)
 
                         //CASO 3
+                        setCoord(coordInc(puedeElegiry))
                     }
                     
                     // Doc. Dir. mayor a 12
@@ -286,43 +273,25 @@ const Table = () => {
                 setCoord(true)
             }
         }
-        // return ronda
     }
 
     const info = () => {
         calcularRonda();
-        // switch(ronda){
-        //     case 0 :
-        //         setTxtRonda('***No puede elegir***')
-        //         break;
-        //     case 1 :
-        //         setTxtRonda('Elige en primera ronda')
-        //         break;
-        //     case 2 :
-        //         setTxtRonda('Elige en segunda ronda')
-        //         break;
-        //     case 3 :
-        //         setTxtRonda('Elige en tercera ronda')
-        //         break;
-        //     case 4 :
-        //         setTxtRonda('Elige en cuarta ronda')
-        //         break;
-        //     default: setTxtRonda('Ver casos excepcionales')
-        // }
         setShow(true)
-        // setTimeout(()=>{setShow(false)}, 5000)
     }
 
-
+    // const clear = () =>{
+    //     useEffect(()=>{
+    //         setHoras(valoresIniciales)
+    //      })
+    // }
     const fecha = new Date()
-    const dia = fecha.getDate()
-    const mes = fecha.getMonth() + 1
-    const anio = fecha.getFullYear()
+    const dia = fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" +fecha.getFullYear()
     
   return (
     <div className=''>
-        <h2>HORAS ASIGNADAS AL {dia + "/" + mes + "/" + anio} </h2>
-        <p>Version: 1.04 - 25/06/24</p>
+        <h2>HORAS ASIGNADAS AL {dia} </h2>
+        <p>Version: 1.05 - 5/07/24</p>
         <form id='formulario'>
             <table className="table col-7 py-2">
                 <thead>
@@ -447,7 +416,6 @@ const Table = () => {
 
             {show ? 
             <>
-                {/* <p className='alerta'>{txtRonda}, puede elegir {puedeElegir}/{puedeElegirInd} horas {coord ? "coordinación incluída" : "más coordinación"}.</p> */}
                 <p className='alerta'>Elige en {ronda}ª ronda. Puede elegir {puedeElegir === puedeElegirInd ? puedeElegir : puedeElegir+" o "+puedeElegirInd} horas{coord == undefined ? "" : (coord ? " coordinación incluída" : " más coordinación")}.</p>
                 <button className='buttonCalc button' onClick={() =>{setShow(false)}}>OK</button>
             </>
@@ -459,22 +427,11 @@ const Table = () => {
                             <option value="0" className='option'>Interino, Suplente o Aspirante</option>
                             <option value="1" className='option'>Efectivo o con Derechos Emergentes</option>
                         </select>
-                        {/* {horas.noAnep_total > 0 &&
-                        <div>
-                        <label>Indique organismo:</label>
-                        <select name="escalafon" id="ecalafon" className='select' onChange={handleEscalafon}>
-                            <option value="a" className='option'>Organismo 1</option>
-                            <option value="b" className='option'>Organismo 2</option>
-                            <option value="c" className='option'>Organismo 3</option>
-                            <option value="d" className='option'>Organismo 4</option>
-                            <option value="e" className='option'>Organismo 5</option>
-                        </select>
-                        </div>} */}
                     </div>
                     <div className='buttons col-5'>
                         {/* <button className='buttonCalc button' onClick={calcularRonda}>Calcular ronda</button> */}
                         <button className='buttonCalc button' onClick={info}>Calcular ronda</button>
-                        <button className='buttonClear button' form='formulario' type='submit'>Limpiar</button>
+                        {/* <button className='buttonClear button' onClick={clear}>Limpiar</button> */}
                     </div>
                 </div>
             }

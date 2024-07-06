@@ -5,8 +5,7 @@ function App() {
 
   return (
     <>
-    
-    <Table/>
+      <Table/>
     </>
   )
 }
