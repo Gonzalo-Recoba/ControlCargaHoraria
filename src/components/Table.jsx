@@ -284,7 +284,8 @@ const Table = () => {
     
   return (
     <div className='page'>
-        <h2>HORAS ASIGNADAS AL {dia} </h2>
+        <h2>CALCULADOR DE RONDAS</h2>
+        <h4>HORAS ASIGNADAS AL {dia} </h4>
         <p>Version: 1.12 - 22/08/24</p>
         <form id='formulario'>
             <table className="table col-7 py-2">
