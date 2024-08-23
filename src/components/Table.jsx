@@ -95,9 +95,9 @@ const Table = () => {
         const { name, value } = e.target;
         setHoras({...horas, [name]: Number(value)})
     }
-    const handleEscalafon = (e) => {
-        setEscalafon(e.target.value)
-    }
+    // const handleEscalafon = (e) => {
+    //     setEscalafon(e.target.value)
+    // }
     
     useEffect(()=>{
         setHoras({...horas, 
@@ -279,19 +279,13 @@ const Table = () => {
         calcularRonda();
         setShow(true)
     }
-
-    // const clear = () =>{
-    //     useEffect(()=>{
-    //         setHoras(valoresIniciales)
-    //      })
-    // }
     const fecha = new Date()
     const dia = fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" +fecha.getFullYear()
     
   return (
-    <div className=''>
+    <div className='page'>
         <h2>HORAS ASIGNADAS AL {dia} </h2>
-        <p>Version: 1.05 - 5/07/24</p>
+        <p>Version: 1.12 - 22/08/24</p>
         <form id='formulario'>
             <table className="table col-7 py-2">
                 <thead>
@@ -415,15 +409,15 @@ const Table = () => {
         </form>
 
             {show ? 
-            <>
-                <p className='alerta'>Elige en {ronda}ª ronda. Puede elegir {puedeElegir === puedeElegirInd ? puedeElegir : puedeElegir+" o "+puedeElegirInd} horas{coord == undefined ? "" : (coord ? " coordinación incluída" : " más coordinación")}.</p>
-                <button className='buttonCalc button' onClick={() =>{setShow(false)}}>OK</button>
-            </>
+                <>
+                    <p className='alerta'>Elige en {ronda}ª ronda. Puede elegir {puedeElegir === puedeElegirInd ? puedeElegir : puedeElegir+" o "+puedeElegirInd} horas{coord == undefined ? "" : (coord ? " coordinación incluída" : " más coordinación")}.</p>
+                    <button className='buttonCalc button' onClick={() =>{setShow(false)}}>OK</button>
+                </>
                 :
                 <div className='other row'>
                     <div className='defArea col-7'>
                         <label>En esta área soy: </label>
-                        <select name="escalafon" id="ecalafon" className='select' onChange={handleEscalafon}>
+                        <select name="escalafon" id="ecalafon" className='select' onChange={(e) => {setEscalafon(e.target.value)}}>
                             <option value="0" className='option'>Interino, Suplente o Aspirante</option>
                             <option value="1" className='option'>Efectivo o con Derechos Emergentes</option>
                         </select>

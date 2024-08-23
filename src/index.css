@@ -1,9 +1,11 @@
+
 input{
   width: 60px;
   height: 30px;
   border: 0.5px solid rgb(141, 138, 138);
+  /* border: none; */
   border-radius: 5px;
-  font-size: 25;
+  font-size: 20px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -36,7 +38,9 @@ tr >.text{
 h2{
   text-align: center;
 }
-
+.formulario{
+  width: 100%;
+}
 .select, .option{
   border: none;
   margin-left: 10px;
@@ -84,9 +88,10 @@ h2{
   border: 2px solid black;
   border-radius: 10px;
   background-color: aquamarine;
-  height: 80px;
+  min-height: 80px;
+  width: 100%;
   align-content: center;
-  font-size: 40px;
+  font-size: 36px;
 }
 .span{
   font-size: 9px;
